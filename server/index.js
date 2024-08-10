@@ -13,7 +13,7 @@ const app=express();
 const port=process.env.SERVER_PORT;
 app.use(bodyParser.json());
 app.use(cors({
-    origin:["http://localhost:3000"],
+    origin:["https://invenhub.vercel.app/"],
     methods:["GET","POST"],
     credentials:true
 }));
@@ -64,6 +64,9 @@ const billSchema=new mongoose.Schema({
 
 const bill=mongoose.model("BillDetails",billSchema)
 
+app.get("/",(req,res)=>{
+    res.send("Welcome to the home page");
+})
 
 app.get("/bill",async(req,res)=>{
     const billDetails=await bill.find();
