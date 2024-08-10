@@ -44,6 +44,12 @@ const signupSchema= new mongoose.Schema({
         type:String,
         required:true,
     },
+    otp:{
+        type:String,
+        },
+     otpExpiration:{
+        type:Date,
+     }
 });
 
 const signUp=mongoose.model("SignUp_Data",signupSchema);
