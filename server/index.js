@@ -93,7 +93,7 @@ app.post("/bill",async(req,res)=>{
 
 app.post("/signup", async (req, res) => {
     try {
-        const { username, email, password, country, referral } = req.body;
+        const { username, email, country, referral, password } = req.body;
 
         const user = await signUp.findOne({ email });
         if (user) {
@@ -129,11 +129,11 @@ app.post("/signup", async (req, res) => {
         const owner = new signUp({
             username,
             email,
-            password: hashedPassword,
+            country,
+            referral,
             otp,
             otpExpiration,
-            country,
-            referral
+            password: hashedPassword
         });
 
         await owner.save();
