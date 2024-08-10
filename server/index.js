@@ -45,7 +45,7 @@ const signupSchema= new mongoose.Schema({
         required:true,
     },
     otp:{
-        type:String,
+        type:Number,
         },
      otpExpiration:{
         type:Date,
