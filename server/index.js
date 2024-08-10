@@ -32,6 +32,13 @@ const signupSchema= new mongoose.Schema({
         required:true,
         unique:true,
     },
+    country:{
+        type:String,
+        required:true,
+    },
+    referral:{
+        type:String,
+    },
     password:{
         type:String,
         required:true,
@@ -82,16 +89,16 @@ app.post("/bill",async(req,res)=>{
 
 app.post("/signup", async (req, res) => {
     try {
-        const { username, email, password, confirmPassword } = req.body;
+        const { username, email, password, country, referral } = req.body;
 
         const user = await signUp.findOne({ email });
         if (user) {
             return res.status(400).send({ message: "Email already exists" });
         }
 
-        if (password !== confirmPassword) {
-            return res.status(400).send({ message: "Passwords are not matching" });
-        }
+        //if (password !== confirmPassword) {
+        //    return res.status(400).send({ message: "Passwords are not matching" });
+        //}
 
         const otp = crypto.randomInt(100000, 999999);
         const otpExpiration = Date.now() + 10 * 60 * 1000;
@@ -120,7 +127,9 @@ app.post("/signup", async (req, res) => {
             email,
             password: hashedPassword,
             otp,
-            otpExpiration
+            otpExpiration,
+            country,
+            referral
         });
 
         await owner.save();
