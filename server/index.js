@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 app.use(cors({
     origin:true,
     methods:["GET","POST"],
+    allowedHeaders: '*',
     credentials:true
 }));
 const db=mongoose.connection
