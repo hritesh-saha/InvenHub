@@ -13,7 +13,7 @@ const app=express();
 const port=process.env.SERVER_PORT;
 app.use(bodyParser.json());
 app.use(cors({
-    origin:["https://invenhub.vercel.app/"],
+    origin:true,
     methods:["GET","POST"],
     credentials:true
 }));
