@@ -1,13 +1,14 @@
 const dotenv=require('dotenv');
+dotenv.config();
 const express=require("express");
 const mongoose=require("mongoose");
 const cors=require("cors");
 const bcrypt=require("bcryptjs")
-mongoose.connect("mongodb://localhost:27017/Bill");
+const db_url=process.env.DB_URI;
+mongoose.connect(db_url);
 const bodyParser = require('body-parser');
 const nodemailer=require("nodemailer");
 const crypto = require('crypto');
-dotenv.config();
 const app=express();
 const port=process.env.SERVER_PORT;
 app.use(bodyParser.json());
