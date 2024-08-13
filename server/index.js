@@ -9,6 +9,7 @@ mongoose.connect(db_url);
 const bodyParser = require('body-parser');
 const nodemailer=require("nodemailer");
 const crypto = require('crypto');
+const bwipjs = require('bwip-js');
 const app=express();
 const port=process.env.SERVER_PORT;
 app.use(bodyParser.json());
@@ -203,6 +204,28 @@ app.post("/login",async(req,res)=>{
         res.status(500).send("Internal server error");
     }
 });
+
+app.get("/barcode",(req,res)=>{
+    const text=req.query.text;
+    bwipjs.toBuffer({
+        bcid: 'ean13',
+        text: text,
+        scale: 3,
+        height: 10, 
+        includetext: true,
+        textxalign: 'center',
+    },(err, png) => {
+        if (err) {
+          res.status(500).send('Error generating barcode');
+          console.error(err);
+          return;
+        }
+    
+        res.setHeader('Content-Type', 'image/png');
+        res.send(png);
+        console.log("BarCode Printed")
+      });
+    });
 
 app.listen(port,()=>{
     console.log(`server is running on port ${port}`)
