@@ -356,7 +356,23 @@ app.post("/add-product", async (req, res) => {
 app.get("/add-product",async(req,res)=>{
     const item=await product.find();
     res.json(item);
-})
+});
+
+//app.get("/get-product", async (req, res) => {
+//  try {
+//      const { barcode_text } = req.query; // Assuming you're using a query parameter to get the product by barcode_text
+//      const item = await product.findOne({ barcode_text });
+//
+//      if (!item) {
+//          return res.status(404).json({ message: "Product not found" });
+//      }
+//
+//      res.json(item);
+//  } catch (error) {
+//      res.status(500).json({ message: "Error fetching product", error: error.message });
+//  }
+//});
+
 
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
