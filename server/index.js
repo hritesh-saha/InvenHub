@@ -188,34 +188,6 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-//app.post("/verify-otp", async (req, res) => {
-//  try {
-//      const { email, otp } = req.body;
-//
-//        const user = await signUp.findOne({ email });
-//        if (!user) {
-//            return res.status(400).send({ message: "User not found" });
-//        }
-//
-//        if (user.otp !== parseInt(otp)) {
-//            return res.status(400).send({ message: "Invalid OTP" });
-//        }
-//
-//        if (Date.now() > user.otpExpiration) {
-//            return res.status(400).send({ message: "OTP has expired" });
-//        }
-
-//        user.otp = null;
-//        user.otpExpiration = null;
-//        await user.save();
-
-//        res.status(200).send({ message: "User registered successfully" });
-
-//    } catch (err) {
-//        console.error('Error verifying OTP:', err.message);
-//        res.status(500).send("Internal server error");
-//    }
-//});
 
 app.post("/verify-otp", async (req, res) => {
   try {
