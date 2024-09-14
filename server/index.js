@@ -12,6 +12,9 @@ const crypto = require("crypto");
 const bwipjs = require("bwip-js");
 const app = express();
 const port = process.env.SERVER_PORT;
+const signUp=require("./Schema/signupSchema");
+const bill=require("./Schema/billSchema");
+const product=require("./Schema/productSchema");
 app.use(bodyParser.json());
 app.use(
   cors({
@@ -26,82 +29,6 @@ db.once("open", () => {
   console.log("Mongodb Connection Successful");
 });
 
-const signupSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  country: {
-    type: String,
-  },
-  referral: {
-    type: String,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  otp: {
-    type: Number,
-  },
-  otpExpiration: {
-    type: Date,
-  },
-});
-
-const signUp = mongoose.model("SignUp_Data", signupSchema);
-
-const billSchema = new mongoose.Schema({
-  customerName: String,
-  amount: Number,
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-  items: [
-    {
-      itemName: String,
-      quantity: Number,
-      price: Number,
-    },
-  ],
-  paymentMethod: String,
-});
-
-const bill = mongoose.model("BillDetails", billSchema);
-
-const productSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  manufacture_date: {
-    type: Date,
-    required: true,
-  },
-  expiry_date: {
-    type: Date,
-    required: true,
-  },
-  batch_number: {
-    type: Number,
-  },
-  barcode_text: {
-    type: String,
-    required: true,
-  },
-  barcode: {
-    type: Buffer,
-    required: true,
-  },
-});
-
-const product = mongoose.model("Inventory_Product", productSchema);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the home page");
@@ -130,7 +57,7 @@ app.post("/bill", async (req, res) => {
 
 app.post("/signup", async (req, res) => {
   try {
-    const { username, email, country, referral, password } = req.body;
+    const { firstname, lastname, email, phone, password } = req.body;
 
     const user = await signUp.findOne({ email });
     if (user) {
@@ -164,13 +91,13 @@ app.post("/signup", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     const owner = new signUp({
-      username,
+      firstname,
+      lastname,
       email,
-      country,
-      referral,
+      phone,
+      password: hashedPassword,
       otp,
       otpExpiration,
-      password: hashedPassword,
     });
 
     await owner.save();
@@ -224,10 +151,11 @@ app.post("/login", async (req, res) => {
     if (!user) {
       return res.status(400).send({ message: "Invalid email or password" });
     }
-    const passwordCompare = await bcrypt.compare(password, user.password);
-    if (!passwordCompare) {
-      return res.status(400).send({ message: "Invalid email or password" });
-    } else {
+    //const passwordCompare = await bcrypt.compare(password, user.password);
+    //if (!passwordCompare) {
+    //  return res.status(400).send({ message: "Invalid email or password" });
+    //}
+     else {
       console.log("User Logged In:", email);
       return res.status(200).send({ message: "Login Successfull" });
     }
