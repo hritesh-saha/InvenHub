@@ -5,6 +5,18 @@ const productSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    cost_price:{
+      type:Number,
+      required:true
+    },
+    selling_price:{
+      type:Number,
+      required:true
+    },
+    quantity:{
+      type:Number,
+      required:true
+    },
     manufacture_date: {
       type: Date,
       required: true,
@@ -22,7 +34,6 @@ const productSchema = new mongoose.Schema({
     },
     barcode: {
       type: Buffer,
-      required: true,
     },
   });
   

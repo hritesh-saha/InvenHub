@@ -167,7 +167,11 @@ app.post("/login", async (req, res) => {
 
 app.post("/add-product", async (req, res) => {
   try {
-    const { name, manufacture_date, expiry_date, batch_number, barcode_text } =req.body;
+    const { name,cost_price,selling_price,quantity, manufacture_date, expiry_date, batch_number, barcode_text } =req.body;
+
+    const stock_cost=cost_price*quantity;
+    const stock_selling_price=selling_price*quantity;
+    const stock_profit=stock_selling_price-stock_cost;
 
     // Function to calculate the check digit for EAN-13
     const calculateCheckDigit = (barcode) => {
@@ -236,6 +240,12 @@ app.post("/add-product", async (req, res) => {
     // Create a new product with the generated barcode
     const newProduct = new product({
       name,
+      cost_price,
+      selling_price,
+      quantity,
+      stock_cost,
+      stock_selling_price,
+      stock_profit,
       manufacture_date,
       expiry_date,
       batch_number,
