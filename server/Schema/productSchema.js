@@ -16,6 +16,17 @@ const productSchema = new mongoose.Schema({
     quantity:{
       type:Number,
       required:true
+    },stock_cost:{
+      type:Number,
+      required:true
+    },
+    stock_selling_price:{
+      type:Number,
+      required:true
+    },
+    stock_profit:{
+      type:Number,
+      required:true
     },
     manufacture_date: {
       type: Date,
