@@ -42,7 +42,6 @@ const productSchema = new mongoose.Schema({
     },
     barcode_text: {
       type: String,
-      required: true,
     },
     barcode: {
       type: Buffer,
