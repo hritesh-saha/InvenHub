@@ -263,7 +263,7 @@ app.post("/add-product", async (req, res) => {
   }
 });
 
-app.get("/add-product",async(req,res)=>{
+app.get("/product",async(req,res)=>{
     const item=await product.find();
     res.json(item);
 });
