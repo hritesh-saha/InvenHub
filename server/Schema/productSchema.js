@@ -4,7 +4,6 @@ const productSchema = new mongoose.Schema({
     name: {
       type: String,
       required: true,
-      unique:true
     },
     cost_price:{
       type:Number,
@@ -14,10 +13,15 @@ const productSchema = new mongoose.Schema({
       type:Number,
       required:true
     },
-    quantity:{
+    sale:{
       type:Number,
       required:true
-    },stock_cost:{
+    },
+    monthly_sale:{
+      type:Number,
+      required:true
+    },
+    stock_cost:{
       type:Number,
       required:true
     },
