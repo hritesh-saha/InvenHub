@@ -285,6 +285,36 @@ app.get("/product",async(req,res)=>{
 //});
 
 
+app.put("/update-product", async (req, res) => {
+  try {
+    const { name,cost_price,selling_price,sale,monthly_sale, manufacture_date, expiry_date, batch_number, barcode_text } =req.body;
+
+    const user = await product.findOne({ name });
+    if (!user) {
+      return res.status(400).json({ message: "Product Not Found!" });
+    }
+
+    const updatedProduct = await product.findOneAndUpdate(
+      { name }, // Search Condition
+      { $set: { cost_price,selling_price,sale,monthly_sale, manufacture_date, expiry_date, batch_number, barcode_text } }, // Update fields without touching unmentioned fields
+      { new: true, runValidators: true } // return the updated document
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product Not Found!" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "product updated successfully!", updatedProduct });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Failed to update product information" });
+  }
+});
+
+
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
 });
