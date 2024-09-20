@@ -279,10 +279,20 @@ app.put("/update-product", async (req, res) => {
       return res.status(400).json({ message: "Product Not Found!" });
     }
 
+    const updates = {};
+    if (cost_price != null) updates.cost_price = cost_price;
+    if (selling_price != null) updates.selling_price = selling_price;
+    if (sale != null) updates.sale = sale;
+    if (monthly_sale != null) updates.monthly_sale = monthly_sale;
+    if (manufacture_date != null) updates.manufacture_date = manufacture_date;
+    if (expiry_date != null) updates.expiry_date = expiry_date;
+    if (batch_number != null) updates.batch_number = batch_number;
+    if (barcode_text != null) updates.barcode_text = barcode_text;
+
     const updatedProduct = await product.findOneAndUpdate(
       { name }, // Search Condition
-      { $set: { cost_price,selling_price,sale,monthly_sale, manufacture_date, expiry_date, batch_number, barcode_text } }, // Update fields without touching unmentioned fields
-      { new: true, runValidators: true } // return the updated document
+      { $set: updates }, // Update only valid fields
+      { new: true, runValidators: true } // Return the updated document
     );
 
     if (!updatedProduct) {
