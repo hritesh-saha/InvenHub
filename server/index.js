@@ -269,21 +269,6 @@ app.get("/product",async(req,res)=>{
     res.json(item);
 });
 
-//app.get("/get-product", async (req, res) => {
-//  try {
-//      const { barcode_text } = req.query; // Assuming you're using a query parameter to get the product by barcode_text
-//      const item = await product.findOne({ barcode_text });
-//
-//      if (!item) {
-//          return res.status(404).json({ message: "Product not found" });
-//      }
-//
-//      res.json(item);
-//  } catch (error) {
-//      res.status(500).json({ message: "Error fetching product", error: error.message });
-//  }
-//});
-
 
 app.put("/update-product", async (req, res) => {
   try {
