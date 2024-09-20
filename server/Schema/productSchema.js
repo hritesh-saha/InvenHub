@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema({
     },
     monthly_sale:{
       type:Number,
-      required:true
+      default:null
     },
     stock_cost:{
       type:Number,
@@ -43,6 +43,7 @@ const productSchema = new mongoose.Schema({
     },
     batch_number: {
       type: Number,
+      default:null
     },
     barcode_text: {
       type: String,
