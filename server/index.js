@@ -309,6 +309,21 @@ app.put("/update-product", async (req, res) => {
   }
 });
 
+app.get('/search', async (req, res) => {
+  try {
+    const { query } = req.query;
+
+    if (!query) {
+      return res.status(400).json({ message: 'Query parameter is required' });
+    }
+
+    const results = await product.find({ name: new RegExp('^' + query, 'i') });
+
+    res.json(results);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+});
 
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
