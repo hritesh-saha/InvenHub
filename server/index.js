@@ -64,10 +64,6 @@ app.post("/signup", async (req, res) => {
       return res.status(400).send({ message: "Email already exists" });
     }
 
-    //if (password !== confirmPassword) {
-    //    return res.status(400).send({ message: "Passwords are not matching" });
-    //}
-
     const otp = crypto.randomInt(100000, 999999);
     const otpExpiration = Date.now() + 10 * 60 * 1000;
 
