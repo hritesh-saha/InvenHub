@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(
   cors({
     origin: true,
-    methods: ["GET", "POST","PUT"],
+    methods: ["GET","POST","PUT","DELETE"],
     allowedHeaders: "*",
     credentials: true,
   })
@@ -323,6 +323,23 @@ app.put("/update-product", async (req, res) => {
       .json({ error: "Failed to update product information" });
   }
 });
+
+app.delete("/delete-product",async(req,res)=>{
+  try{
+    const {name,email}=req.body;
+    if(!name){
+      return res.status(400).json({message:"Product name is required!"});
+    };
+    const deletedProduct=await product.findOneAndDelete({name,email});
+    if(!deletedProduct){
+      return res.status(404).json({message:"Product Not Found!"});
+    }
+    return res.status(200).json({message:"Product deleted successfully!"});
+  }
+  catch{
+    res.status(500).send("An error occurred while deleting products.");
+  }
+})
 
 app.get('/search', async (req, res) => {
   try {
