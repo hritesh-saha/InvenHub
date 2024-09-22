@@ -10,6 +10,7 @@ const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const bwipjs = require("bwip-js");
+const axios = require('axios');
 const app = express();
 const port = process.env.SERVER_PORT;
 const signUp=require("./Schema/signupSchema");
@@ -320,6 +321,26 @@ app.get('/search', async (req, res) => {
     res.status(500).json({ message: 'Server error', error });
   }
 });
+
+app.post("/predict",async(req,res)=>{
+  try{
+    const {date,category}=req.body;
+    const parsedDate = new Date(date);
+    const month = `${parsedDate.getFullYear()}-${String(parsedDate.getMonth() + 1).padStart(2, '0')}`;
+
+    const requestedData={
+      category,
+      month
+    };
+    console.log(requestedData);
+    const response=await axios.post('http://localhost:5500/predict',requestedData);
+    console.log(response);
+    res.json(response.data);
+  }
+  catch{
+    res.status(500).json({ message: 'Server error'});
+  }
+})
 
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
