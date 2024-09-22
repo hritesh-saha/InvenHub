@@ -164,7 +164,7 @@ app.post("/login", async (req, res) => {
 
 app.post("/add-product", async (req, res) => {
   try {
-    const { name,cost_price,selling_price,sale,monthly_sale, manufacture_date, expiry_date, batch_number, barcode_text } =req.body;
+    const { name,email,cost_price,selling_price,sale,monthly_sale, manufacture_date, expiry_date, batch_number, barcode_text } =req.body;
 
     const stock_cost=cost_price*sale;
     const stock_selling_price=selling_price*sale;
@@ -237,6 +237,7 @@ app.post("/add-product", async (req, res) => {
     // Create a new product with the generated barcode
     const newProduct = new product({
       name,
+      email,
       cost_price,
       selling_price,
       sale,
