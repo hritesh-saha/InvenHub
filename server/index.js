@@ -26,7 +26,11 @@ app.use(
   })
 );
 const db = mongoose.connection;
-db.once("open", () => {
+
+
+db.once("open", async() => {
+  await product.collection.dropIndexes();
+
   console.log("Mongodb Connection Successful");
 });
 
@@ -257,6 +261,10 @@ app.post("/add-product", async (req, res) => {
     console.log("Product added with EAN-13 Barcode:", finalBarcodeText);
     res.status(200).send("Product successfully added.");
   } catch (err) {
+    if (err.code === 11000) {
+      // Duplicate key error
+      return res.status(400).send("A product with this name and email combination already exists.");
+    }
     console.error("Error adding product:", err.message);
     res.status(500).send("An error occurred while adding the product.");
   }

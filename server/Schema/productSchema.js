@@ -8,7 +8,6 @@ const productSchema = new mongoose.Schema({
     email: {
       type: String,
       required: true,
-      unique: true,
     },
     cost_price:{
       type:Number,
@@ -57,7 +56,8 @@ const productSchema = new mongoose.Schema({
       type: Buffer,
     },
   });
-  
+  productSchema.index({ name: 1, email: 1 }, { unique: true });
+
   const product = mongoose.model("Inventory_Product", productSchema);
 
   module.exports=product
