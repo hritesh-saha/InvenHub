@@ -263,16 +263,25 @@ app.post("/add-product", async (req, res) => {
 });
 
 app.get("/product",async(req,res)=>{
-    const item=await product.find();
+  try{
+    const {email}=req.body;
+    if(!email){
+      return res.status(400).send("Email is required");
+    };
+    const item=await product.find({email});
     res.json(item);
+  }
+  catch{
+    res.status(500).send("An error occurred while fetching products.");
+  }
 });
 
 
 app.put("/update-product", async (req, res) => {
   try {
-    const { name,cost_price,selling_price,sale,monthly_sale, manufacture_date, expiry_date, batch_number, barcode_text } =req.body;
+    const { name,email,cost_price,selling_price,sale,monthly_sale, manufacture_date, expiry_date, batch_number, barcode_text } =req.body;
 
-    const user = await product.findOne({ name });
+    const user = await product.findOne({ name,email });
     if (!user) {
       return res.status(400).json({ message: "Product Not Found!" });
     }
@@ -288,7 +297,7 @@ app.put("/update-product", async (req, res) => {
     if (barcode_text != null) updates.barcode_text = barcode_text;
 
     const updatedProduct = await product.findOneAndUpdate(
-      { name }, // Search Condition
+      { name,email }, // Search Condition
       { $set: updates }, // Update only valid fields
       { new: true, runValidators: true } // Return the updated document
     );
@@ -309,13 +318,13 @@ app.put("/update-product", async (req, res) => {
 
 app.get('/search', async (req, res) => {
   try {
-    const { query } = req.query;
+    const { query,email } = req.query;
 
     if (!query) {
       return res.status(400).json({ message: 'Query parameter is required' });
     }
 
-    const results = await product.find({ name: new RegExp('^' + query, 'i') });
+    const results = await product.find({ name: new RegExp('^' + query, 'i'),email });
 
     res.json(results);
   } catch (error) {
