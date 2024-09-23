@@ -16,6 +16,7 @@ const port = process.env.SERVER_PORT;
 const signUp=require("./Schema/signupSchema");
 const bill=require("./Schema/billSchema");
 const product=require("./Schema/productSchema");
+const profile=require("./Schema/profileSchema");
 app.use(bodyParser.json());
 app.use(
   cors({
@@ -374,6 +375,65 @@ app.post("/predict",async(req,res)=>{
   }
   catch{
     res.status(500).json({ message: 'Server error'});
+  }
+});
+
+app.get("/profile",async(req,res)=>{
+  try{
+    const {email}=req.body;
+    const user=await profile.find({email});
+    res.status(200).json(user);
+  }
+  catch{
+    res.status(500).json({ message: 'Error fetching Profile'});
+  }
+});
+
+app.post("/add-profile",async(req,res)=>{
+  try{
+    const {firstname,lastname,email,phone,location}=req.body;
+    const user=await profile.find({email});
+    if(!user){
+      return res.status(404).json({message:"Profile Not Found"});
+    }
+    const newUser=await profile.create({
+      firstname,
+      lastname,
+      email,
+      phone,
+      location});
+      await newUser.save();
+      return res.status(201).json({message:"Profile saved Successfully"});
+  }
+  catch{
+    res.status(500).json({ message: 'Error fetching Profile'});
+  }
+});
+
+app.put("/update-profile",async(req,res)=>{
+  try{
+    const {firstname,lastname,email,phone,location}=req.body;
+    const user=await profile.find({email});
+    if(!user){
+      return res.status(404).json({message:"Profile Not Found"});
+    };
+    const updates={};
+    if(firstname) updates.firstname=firstname;
+    if(lastname) updates.lastname=lastname;
+    if(phone) updates.phone=phone;
+    if(location) updates.location=location;
+    const updatedUser=await profile.findOneAndUpdate(
+      {email}, // Search Condition
+      { $set: updates }, // Update only valid fields
+      { new: true, runValidators: true } // Return the updated document)
+);
+if(!updatedUser){
+  return res.status(404).json({message:"Unable to Update Profile"});
+}
+res.status(200).json(updatedUser);
+}
+  catch{
+    res.status(500).json({ message: 'Error fetching Profile'});
   }
 })
 
