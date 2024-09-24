@@ -153,7 +153,11 @@ app.post("/login", async (req, res) => {
     if (!user) {
       return res.status(400).send({ message: "Invalid email or password" });
     }
-     else {
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).send({ message: "Invalid email or password" });
+    }
+     else{
       console.log("User Logged In:", email);
       return res.status(200).send({ message: "Login Successfull" });
     }
