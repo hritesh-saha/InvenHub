@@ -438,5 +438,5 @@ res.status(200).json(updatedUser);
 })
 
 app.listen(port, () => {
-  console.log(`server is running on port ${port}`);
+  console.log("Server is running on port");
 });
