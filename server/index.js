@@ -369,9 +369,9 @@ app.post("/predict",async(req,res)=>{
       month
     };
     console.log(requestedData);
-    const response=await axios.post('http://localhost:5500/predict',requestedData);
+    const response=await axios.post('https://sale-prediction-4co1.onrender.com/predict',requestedData);
     console.log(response);
-    res.json(response.data);
+    res.status(200).json(response.data);
   }
   catch{
     res.status(500).json({ message: 'Server error'});
