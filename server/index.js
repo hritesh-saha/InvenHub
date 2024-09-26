@@ -192,7 +192,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/add-product",verifyToken,  async (req, res) => {
+app.post("/add-product", async (req, res) => {
   try {
     const { name,email,cost_price,selling_price,sale,monthly_sale, manufacture_date, expiry_date, batch_number, barcode_text } =req.body;
 
@@ -296,7 +296,7 @@ app.post("/add-product",verifyToken,  async (req, res) => {
   }
 });
 
-app.get("/product",verifyToken, async(req,res)=>{
+app.get("/product", async(req,res)=>{
   try{
     const {email}=req.body;
     if(!email){
@@ -311,7 +311,7 @@ app.get("/product",verifyToken, async(req,res)=>{
 });
 
 
-app.put("/update-product",verifyToken, async (req, res) => {
+app.put("/update-product", async (req, res) => {
   try {
     const { name,email,cost_price,selling_price,sale,monthly_sale, manufacture_date, expiry_date, batch_number, barcode_text } =req.body;
 
@@ -350,7 +350,7 @@ app.put("/update-product",verifyToken, async (req, res) => {
   }
 });
 
-app.delete("/delete-product",verifyToken, async(req,res)=>{
+app.delete("/delete-product", async(req,res)=>{
   try{
     const {name,email}=req.body;
     if(!name){
@@ -367,7 +367,7 @@ app.delete("/delete-product",verifyToken, async(req,res)=>{
   }
 })
 
-app.get('/search',verifyToken, async(req, res) => {
+app.get('/search', async(req, res) => {
   try {
     const { query,email } = req.query;
 
@@ -383,7 +383,7 @@ app.get('/search',verifyToken, async(req, res) => {
   }
 });
 
-app.post("/predict",verifyToken, async(req,res)=>{
+app.post("/predict", async(req,res)=>{
   try{
     const {date,category}=req.body;
     const parsedDate = new Date(date);
@@ -403,7 +403,7 @@ app.post("/predict",verifyToken, async(req,res)=>{
   }
 });
 
-app.get("/profile",verifyToken, async(req,res)=>{
+app.get("/profile", async(req,res)=>{
   try{
     const {email}=req.body;
     const user=await profile.find({email});
@@ -414,7 +414,7 @@ app.get("/profile",verifyToken, async(req,res)=>{
   }
 });
 
-app.post("/add-profile",verifyToken, async(req,res)=>{
+app.post("/add-profile", async(req,res)=>{
   try{
     const {firstname,lastname,email,phone,location}=req.body;
     const user=await profile.find({email});
@@ -435,7 +435,7 @@ app.post("/add-profile",verifyToken, async(req,res)=>{
   }
 });
 
-app.put("/update-profile",verifyToken, async(req,res)=>{
+app.put("/update-profile", async(req,res)=>{
   try{
     const {firstname,lastname,email,phone,location}=req.body;
     const user=await profile.find({email});
