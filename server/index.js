@@ -458,7 +458,7 @@ if(!updatedUser){
 res.status(200).json(updatedUser);
 }
   catch{
-    res.status(500).json({ message: 'Error fetching Profile'});
+    res.status(500).json({ message: 'Error updating Profile'});
   }
 })
 
