@@ -9,6 +9,8 @@ import { Products } from './pages/Products';
 import { Inventory } from './pages/Inventory';
 import { Update } from './pages/Update';
 import { User } from './pages/User';
+import {Otp} from './pages/Otp';
+import { Signout } from './components/Signout';
 
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
       <Route path='/inventory' element={<Inventory/>}></Route>
       <Route path='/update' element={<Update/>}></Route>
       <Route path='/user' element={<User/>}></Route>
+      <Route path='/otp' element={<Otp></Otp>}></Route>
 
 
 

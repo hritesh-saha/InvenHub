@@ -6,33 +6,39 @@ import { FaHouse } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdBarChart } from "react-icons/md";
 import { FaBox } from "react-icons/fa";
-import { IoIosListBox } from "react-icons/io";
-
+import { FaProductHunt } from "react-icons/fa";
+import { FaUserAlt } from "react-icons/fa";
 export default function Sidebar(){
     const [open,setOpen]=useState(true);
     return(
-        <div className={`bg-zinc-50 h-screen p-5 pt-8 duration-300 ${open ?"w-60":"w-20"} relative`}>
+        <div className={`flex flex-col bg-zinc-50 h-screen p-5 pt-8 duration-300 ${open ?"w-60":"w-20"} relative`}>
             <BsArrowLeftShort className={`bg-white text-black text-3xl rounded-full absolute -right-3 top-9 border border-black cursor-pointer ${open?"rotate-0":"rotate-180"}`} onClick={()=>setOpen(!open)}/>
                 <div className="inline-flex">
+                <a href="/dashboard">
                 <FaHouse className={`text-stone-500 text-4xl rounded cursor-pointer block float-left mr-2 duration-300`} />
                 <h1 className={`origin-left font-medium text-xl duration-300 ${!open && "scale-0"}`}>Dashboard</h1>
+                </a>
                 
                 </div>
                 <div className="inline-flex pt-4">
-                <FaShoppingCart className={`text-stone-500 text-4xl rounded cursor-pointer block float-left mr-2 duration-300`}/>
+                <a href="/inventory">
+                <FaShoppingCart href="/inventory" className={`text-stone-500 text-4xl rounded cursor-pointer block float-left mr-2 duration-300`}/>
                 <h1 className={`origin-left font-medium text-xl duration-300 ${!open && "scale-0"}`}>Inventory</h1>
+                </a>
                 </div>
                 <div className="inline-flex pt-4">
-                <MdBarChart className={`text-stone-500 text-4xl rounded cursor-pointer block float-left mr-2 duration-300`}/>
-                <h1 className={`origin-left font-medium text-xl duration-300 ${!open && "scale-0"}`}>Reports</h1>
+                <a href="/products">
+                <FaProductHunt className={`text-stone-500 text-4xl rounded cursor-pointer block float-left mr-2 duration-300`}/>
+                <h1 className={`origin-left font-medium text-xl duration-300 ${!open && "scale-0"}`}>Products</h1>
+                </a>
                 </div>
                 <div className="inline-flex pt-4">
-                <FaBox className={`text-stone-500 text-4xl rounded cursor-pointer block float-left mr-2 duration-300`}/>
-                <h1 className={`origin-left font-medium text-xl duration-300 ${!open && "scale-0"}`}>Orders</h1>
+                <a href="/user">
+                <FaUserAlt className={`text-stone-500 text-4xl rounded cursor-pointer block float-left mr-2 duration-300`}/>
+                <h1 className={`origin-left font-medium text-xl duration-300 ${!open && "scale-0"}`}>User</h1>
+                </a>
                 </div>
                 <div className="inline-flex pt-4">
-                <IoIosListBox className={`text-stone-500 text-4xl rounded cursor-pointer block float-left mr-2 duration-300`}/>
-                <h1 className={`origin-left font-medium text-xl duration-300 ${!open && "scale-0"}`}>NewSale</h1>
                 </div>
         </div>
 

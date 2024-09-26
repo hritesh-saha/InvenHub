@@ -5,6 +5,8 @@ import Button from "../components/Button";
 import axios from "axios";
 import moment from "moment";
 import Sidebar from "../components/Sidebar";
+import { Signout } from "../components/Signout";
+import Navbar from "../components/Navbar";
 
 export function Products(){
     const [name, setname] = useState("");
@@ -66,9 +68,20 @@ export function Products(){
     };
 
     return (
-        <div className="bg-zinc-100 flex ">
-            <Sidebar />
-            <div className="flex flex-row justify-center px-6">
+        <div className="bg-zinc-100 ">
+            <Signout />
+      
+      {/* Render Navbar on mobile (hidden on large screens) */}
+      <div className="lg:hidden">
+        <Navbar />
+      </div>
+      
+      <div className="flex">
+        {/* Render Sidebar on larger screens (hidden on mobile) */}
+        <div className="hidden lg:block">
+          <Sidebar />
+        </div>
+            <div className="flex flex-wrap justify-center px-6">
                 <div className="bg-white w-96 border-2 border-stone-400">
                     <Heading label="Add Product" />
                     <form>
@@ -102,6 +115,7 @@ export function Products(){
                     )}
                 </div>
             </div>
+        </div>
         </div>
     );
 }
