@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
+const jwt=require("jsonwebtoken");
 const db_url = process.env.DB_URI;
 mongoose.connect(db_url);
 const bodyParser = require("body-parser");
@@ -35,17 +36,35 @@ db.once("open", async() => {
   console.log("Mongodb Connection Successful");
 });
 
+const verifyToken = (req, res, next) => {
+  // Get token from the request header
+  const token = req.header('Authorization')?.split(' ')[1]; // Assuming the token is sent as "Bearer <token>"
+
+  if (!token) {
+    return res.status(401).json({ message: 'Access Denied. No token provided.' });
+  }
+
+  try {
+    // Verify the token using the secret key
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = verified; // Attach user information to the request
+
+    next(); // Proceed to the next middleware or route handler
+  } catch (error) {
+    res.status(400).json({ message: 'Invalid token.' });
+  }
+};
 
 app.get("/", (req, res) => {
   res.send("Welcome to the home page");
 });
 
-app.get("/bill", async (req, res) => {
+app.get("/bill",verifyToken,  async (req, res) => {
   const billDetails = await bill.find();
   res.json(billDetails);
 });
 
-app.post("/bill", async (req, res) => {
+app.post("/bill",verifyToken,  async (req, res) => {
   try {
     const billDetails = new bill({
       customerName: req.body.customerName,
@@ -68,7 +87,7 @@ app.post("/signup", async (req, res) => {
     const user = await signUp.findOne({ email });
     if (user) {
       return res.status(400).send({ message: "Email already exists" });
-    }
+    };
 
     const otp = crypto.randomInt(100000, 999999);
     const otpExpiration = Date.now() + 10 * 60 * 1000;
@@ -105,6 +124,7 @@ app.post("/signup", async (req, res) => {
     await owner.save();
     console.log("User Registered, awaiting OTP verification:", owner);
 
+    
     res
       .status(200)
       .send({
@@ -138,8 +158,10 @@ app.post("/verify-otp", async (req, res) => {
     user.otp = null;
     user.otpExpiration = null;
     await user.save();
-
-    res.status(200).send({ message: "User registered successfully" });
+    const payload={email};
+    const token=jwt.sign(payload,process.env.JWT_SECRET, { expiresIn: '7d' });
+    console.log(token);
+    res.status(200).send({ message: "User registered successfully",token:token, });
   } catch (err) {
     console.error("Error verifying OTP:", err.message);
     res.status(500).send("Internal server error");
@@ -159,7 +181,10 @@ app.post("/login", async (req, res) => {
     }
      else{
       console.log("User Logged In:", email);
-      return res.status(200).send({ message: "Login Successfull" });
+      const payload={email};
+      const token=jwt.sign(payload,process.env.JWT_SECRET, { expiresIn: '7d' });
+      console.log(token);
+      return res.status(200).send({ message: "Login Successfull",token:token });
     }
   } catch (err) {
     console.error("Error logging in:", err.message);
@@ -167,7 +192,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/add-product", async (req, res) => {
+app.post("/add-product",verifyToken,  async (req, res) => {
   try {
     const { name,email,cost_price,selling_price,sale,monthly_sale, manufacture_date, expiry_date, batch_number, barcode_text } =req.body;
 
@@ -271,7 +296,7 @@ app.post("/add-product", async (req, res) => {
   }
 });
 
-app.get("/product",async(req,res)=>{
+app.get("/product",verifyToken, async(req,res)=>{
   try{
     const {email}=req.body;
     if(!email){
@@ -286,7 +311,7 @@ app.get("/product",async(req,res)=>{
 });
 
 
-app.put("/update-product", async (req, res) => {
+app.put("/update-product",verifyToken, async (req, res) => {
   try {
     const { name,email,cost_price,selling_price,sale,monthly_sale, manufacture_date, expiry_date, batch_number, barcode_text } =req.body;
 
@@ -325,7 +350,7 @@ app.put("/update-product", async (req, res) => {
   }
 });
 
-app.delete("/delete-product",async(req,res)=>{
+app.delete("/delete-product",verifyToken, async(req,res)=>{
   try{
     const {name,email}=req.body;
     if(!name){
@@ -342,7 +367,7 @@ app.delete("/delete-product",async(req,res)=>{
   }
 })
 
-app.get('/search', async (req, res) => {
+app.get('/search',verifyToken, async(req, res) => {
   try {
     const { query,email } = req.query;
 
@@ -358,7 +383,7 @@ app.get('/search', async (req, res) => {
   }
 });
 
-app.post("/predict",async(req,res)=>{
+app.post("/predict",verifyToken, async(req,res)=>{
   try{
     const {date,category}=req.body;
     const parsedDate = new Date(date);
@@ -378,7 +403,7 @@ app.post("/predict",async(req,res)=>{
   }
 });
 
-app.get("/profile",async(req,res)=>{
+app.get("/profile",verifyToken, async(req,res)=>{
   try{
     const {email}=req.body;
     const user=await profile.find({email});
@@ -389,7 +414,7 @@ app.get("/profile",async(req,res)=>{
   }
 });
 
-app.post("/add-profile",async(req,res)=>{
+app.post("/add-profile",verifyToken, async(req,res)=>{
   try{
     const {firstname,lastname,email,phone,location}=req.body;
     const user=await profile.find({email});
@@ -410,7 +435,7 @@ app.post("/add-profile",async(req,res)=>{
   }
 });
 
-app.put("/update-profile",async(req,res)=>{
+app.put("/update-profile",verifyToken, async(req,res)=>{
   try{
     const {firstname,lastname,email,phone,location}=req.body;
     const user=await profile.find({email});
