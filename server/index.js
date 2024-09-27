@@ -382,7 +382,7 @@ app.get('/search', async(req, res) => {
     res.status(500).json({ message: 'Server error', error });
   }
 });
-
+// frontend still needs to response.data because  axios wraps response in a object 
 app.post("/predict", async(req,res)=>{
   try{
     const {date,category}=req.body;
