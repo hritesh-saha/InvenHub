@@ -14,6 +14,42 @@ The **AI-Based Inventory Management System** optimizes the handling of inventory
 
 ---
 
+## 🛠️ Tech Stack
+
+### Frontend
+ ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white)
+ ![HTML](https://img.shields.io/badge/-HTML-E34F26?logo=html5&logoColor=white)
+ ![CSS](https://img.shields.io/badge/-CSS-1572B6?logo=css3&logoColor=white)
+ ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?logo=javascript&logoColor=black)
+
+### Backend
+ ![Node.js](https://img.shields.io/badge/-Node.js-339933?logo=node.js&logoColor=white)
+ ![Express.js](https://img.shields.io/badge/-Express.js-000000?logo=express&logoColor=white)
+
+### Database
+ ![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?logo=mongodb&logoColor=white)
+ ![Mongoose](https://img.shields.io/badge/-Mongoose-880000?logo=mongoose&logoColor=white)
+
+### Additional Technologies
+ ![Bcrypt.js](https://img.shields.io/badge/-Bcrypt.js-EB5C29?logo=npm&logoColor=white)
+ ![JWT](https://img.shields.io/badge/-JSON%20Web%20Token-000000?logo=none&logoColor=white)
+ ![Nodemailer](https://img.shields.io/badge/-Nodemailer-FFCC29?logo=npm&logoColor=white)
+ ![Axios](https://img.shields.io/badge/-Axios-5A29E3?logo=axios&logoColor=white)
+ ![Bwip.js](https://img.shields.io/badge/-Bwip.js-880000?logo=none&logoColor=white)
+ ![Crypto](https://img.shields.io/badge/-Crypto-000000?logo=none&logoColor=white)
+ ![Body-Parser](https://img.shields.io/badge/-Body%20Parser-000000?logo=none&logoColor=white)
+ ![Flask](https://img.shields.io/badge/-Flask-000000?logo=flask&logoColor=white)
+ ![Joblib](https://img.shields.io/badge/-Joblib-000000?logo=none&logoColor=white)
+ ![Pandas](https://img.shields.io/badge/-Pandas-150458?logo=pandas&logoColor=white)
+ ![Numpy](https://img.shields.io/badge/-NumPy-013243?logo=numpy&logoColor=white)
+ ![Scikit-learn](https://img.shields.io/badge/-Scikit%20Learn-F7931E?logo=scikit-learn&logoColor=white)
+
+### Version Control
+ ![Git](https://img.shields.io/badge/-Git-F05032?logo=git&logoColor=white)
+ ![GitHub](https://img.shields.io/badge/-GitHub-181717?logo=github&logoColor=white)
+
+---
+
 ## ✨ Contributions
 
 ### **Hritesh Saha**
@@ -39,9 +75,10 @@ The **AI-Based Inventory Management System** optimizes the handling of inventory
 ### **Debjyoti Ghosh**
 
 #### **AI Development**
-- Developed the AI sales forecasting module using **Flask** and **Scikit-Learn**.
-- Created a Flask API to predict future sales based on product category and historical data.
-- Managed model training, data preprocessing, and predictions for future sales.
+- Developed the AI sales forecasting module using **Flask** and **Scikit-Learn** for time series forecasting.
+- Created a Flask API to predict future sales based on product category.
+- Implemented data preprocessing techniques to prepare historical sales data for analysis.
+- Managed model training and predictions for future sales using time series analysis.
 
 --- 
 
