@@ -42,7 +42,7 @@ The **AI-Based Inventory Management System** optimizes the handling of inventory
  ![Joblib](https://img.shields.io/badge/-Joblib-000000?logo=none&logoColor=white)
  ![Pandas](https://img.shields.io/badge/-Pandas-150458?logo=pandas&logoColor=white)
  ![Numpy](https://img.shields.io/badge/-NumPy-013243?logo=numpy&logoColor=white)
- ![Scikit-learn](https://img.shields.io/badge/-Scikit%20Learn-F7931E?logo=scikit-learn&logoColor=white)
+ ![Statsmodels](https://img.shields.io/badge/-Statsmodels-336699?logo=statsmodels&logoColor=white)
 
 ### Version Control
  ![Git](https://img.shields.io/badge/-Git-F05032?logo=git&logoColor=white)
