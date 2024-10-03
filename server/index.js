@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt=require("jsonwebtoken");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 const db_url = process.env.DB_URI;
 mongoose.connect(db_url);
 const bodyParser = require("body-parser");
@@ -459,6 +460,25 @@ res.status(200).json(updatedUser);
 }
   catch{
     res.status(500).json({ message: 'Error updating Profile'});
+  }
+});
+
+const genAI=new GoogleGenerativeAI(process.env.API_KEY);
+
+app.post("/chatbot",async(req,res)=>{
+  const {query}=req.body;
+  if (!query) {
+    return res.status(400).json({ error: "Query is required" });
+  }
+  try{
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    const result = await model.generateContent([query]);
+
+    res.status(200).json({ response: result.response.text() });
+  }
+  catch{
+    res.status(500).json({ message: 'Error starting chatbot'});
   }
 })
 
