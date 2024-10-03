@@ -145,14 +145,18 @@ app.post("/verify-otp", async (req, res) => {
 
     // Find a user with the provided OTP
     const user = await signUp.findOne({
-      otp: parseInt(otp),
-      otpExpiration: { $gte: Date.now() },
+      otp: parseInt(otp)
     });
 
     if (!user) {
-      return res
-        .status(400)
-        .send({ message: "Invalid OTP or OTP has expired" });
+      return res.status(400).send({ message: "Invalid OTP" });
+    }
+
+    if (user.otpExpiration <= Date.now()) {
+      user.otp = null;
+      user.otpExpiration = null;
+      await user.save();
+      return res.status(400).send({ message: "OTP has expired" });
     }
 
     // Clear OTP and expiration date
