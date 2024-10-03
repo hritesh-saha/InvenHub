@@ -303,7 +303,7 @@ app.post("/add-product", async (req, res) => {
 
 app.get("/product", async(req,res)=>{
   try{
-    const {email}=req.body;
+    const {email}=req.query;
     if(!email){
       return res.status(400).send("Email is required");
     };
@@ -410,7 +410,7 @@ app.post("/predict", async(req,res)=>{
 
 app.get("/profile", async(req,res)=>{
   try{
-    const {email}=req.body;
+    const {email}=req.query;
     const user=await profile.find({email});
     res.status(200).json(user);
   }
