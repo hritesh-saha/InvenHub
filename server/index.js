@@ -411,7 +411,7 @@ app.post("/predict", async(req,res)=>{
 app.get("/profile", async(req,res)=>{
   try{
     const {email}=req.query;
-    const user=await profile.find({email});
+    const user=await profile.findOne({email});
     res.status(200).json(user);
   }
   catch{
@@ -443,7 +443,7 @@ app.post("/add-profile", async(req,res)=>{
 app.put("/update-profile", async(req,res)=>{
   try{
     const {firstname,lastname,email,phone,location}=req.body;
-    const user=await profile.find({email});
+    const user=await profile.findOne({email});
     if(!user){
       return res.status(404).json({message:"Profile Not Found"});
     };
