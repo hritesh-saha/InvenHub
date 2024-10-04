@@ -163,10 +163,7 @@ app.post("/verify-otp", async (req, res) => {
     user.otp = null;
     user.otpExpiration = null;
     await user.save();
-    const payload={email};
-    const token=jwt.sign(payload,process.env.JWT_SECRET, { expiresIn: '7d' });
-    console.log(token);
-    res.status(200).send({ message: "User registered successfully",token:token, });
+    res.status(200).send({ message: "User registered successfully"});
   } catch (err) {
     console.error("Error verifying OTP:", err.message);
     res.status(500).send("Internal server error");
