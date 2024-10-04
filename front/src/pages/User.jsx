@@ -25,7 +25,7 @@ export function User(){
   },[])
   
     return(
-        <div className="bg-zinc-100 h-screen">
+        <div className="bg-zinc-100 min-h-screen">
       
       {/* Render Navbar on mobile (hidden on large screens) */}
       <div className="lg:hidden">

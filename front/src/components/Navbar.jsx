@@ -37,6 +37,9 @@ export default function Navbar() {
               <a href="\products" className="hover:text-gray-300">Products</a>
             </li>
             <li className="py-2 lg:py-0">
+              <a href="\update" className="hover:text-gray-300">Update</a>
+            </li>
+            <li className="py-2 lg:py-0">
               <a href="\user" className="hover:text-gray-300">User</a>
             </li>
             <li className="py-2 lg:py-0">
