@@ -25,10 +25,10 @@ export default function AI(){
     }
 
     return(
-        <div className="min-w-screen min-h-screen bg-zinc-100 flex flex-col justify-center items-center">
+        <div className="min-h-screen bg-zinc-100 flex flex-col justify-center">
       <Navbar />
-      <Signout />
       
+      <div className="flex flex-col justify-center items-center">
       <div className="rounded-lg bg-white w-1/2 min-h-screen p-4 flex flex-col justify-between">
         <Heading label="AI" color="text-white" />
         {answer}
@@ -52,6 +52,7 @@ export default function AI(){
             className="cursor-pointer"
           />
         </div>
+      </div>
       </div>
     </div>
     )

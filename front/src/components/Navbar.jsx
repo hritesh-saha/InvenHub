@@ -39,6 +39,12 @@ export default function Navbar() {
             <li className="py-2 lg:py-0">
               <a href="\user" className="hover:text-gray-300">User</a>
             </li>
+            <li className="py-2 lg:py-0">
+              <a href="\ai" className="hover:text-gray-300">ChatBot</a>
+            </li>
+            <li className="py-2 lg:py-0">
+              <a href="\predict" className="hover:text-gray-300">Predict</a>
+            </li>
           </ul>
 
           {/* Optional Button */}

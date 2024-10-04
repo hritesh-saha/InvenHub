@@ -9,7 +9,7 @@ export function User(){
   const [email,setemail]=useState("");
   useEffect(()=>{
     const fetchuser=async ()=>{
-    const storedemail=localStorage.getItem("email");
+    const storedemail=JSON.parse(localStorage.getItem("email"));
      setemail(storedemail);
      console.log(email);
      try {

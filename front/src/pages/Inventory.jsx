@@ -92,6 +92,11 @@ export function Inventory() {
     fetchProducts();
 }, [email]);
 
+ // Calculate Total Sales, Total Products Value, and Top Selling
+ const totalSales = products.reduce((sum, product) => sum + product.sale, 0);
+ const totalProductsValue = products.reduce((sum, product) => sum + product.cost_price, 0);
+ const topSelling = products.length > 0 ? Math.max(...products.map(product => product.selling_price)) : 0;
+
   return (
     <div className="bg-zinc-100">
       
@@ -110,9 +115,9 @@ export function Inventory() {
           <div className="bg-white flex flex-col w-full p-5 my-5">
             <div className="flex justify-center"><SubHeading label="Overall Inventory" /></div>
             <div className="flex flex-col md:flex-row justify-between my-4">
-              <div className="px-8 h-20 border-r-0 md:border-r-2 mb-3 text-blue-500 text-center md:text-left">Categories <br /> value</div>
-              <div className="px-8 h-20 border-r-0 md:border-r-2 mb-3 text-yellow-400 text-center md:text-left">Total Products <br /> value</div>
-              <div className="px-8 h-20 mb-3 text-fuchsia-500 text-center md:text-left">Top Selling <br /> value</div>
+              <div className="px-8 h-20 border-r-0 md:border-r-2 mb-3 text-blue-500 text-center md:text-left">Total Products <br /> {totalProductsValue}</div>
+              <div className="px-8 h-20 border-r-0 md:border-r-2 mb-3 text-yellow-400 text-center md:text-left">Total Sales <br /> {totalSales}</div>
+              <div className="px-8 h-20 mb-3 text-fuchsia-500 text-center md:text-left">Top Selling <br /> {topSelling}</div>
             </div>
           </div>
 

@@ -55,7 +55,7 @@ export default function Signin(){
           <SubHeading label="Password"></SubHeading>
           <Inputbox type="password" label="" placeholder="password" onChange={(e) => setpassword(e.target.value)}></Inputbox>
           {error && <p className="text-red-500">{error}</p>}
-          <Button label="Send Otp" onClick={handleSend}></Button>
+          <Button label="Login" onClick={handleSend}></Button>
       </div>
       </div>
       </div>

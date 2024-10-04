@@ -148,6 +148,9 @@ export default function Signup() {
           <div className="mt-4">
             <Button label="Signup" onClick={handleSend} />
           </div>
+          <div>
+            <h3 className="flex font-semibold">Have an Account?&nbsp;&nbsp;<a className="text-blue-700" href="/signin">Login</a></h3>
+          </div>
         </div>
       </div>
     </div>

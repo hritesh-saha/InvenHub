@@ -33,12 +33,47 @@
 //     )
 
 // }
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";  // Import Navbar
 import Sidebar from "../components/Sidebar";
+import Heading from "../components/Heading";
+import axios from "axios";
+import moment from "moment";
 import { Signout } from "../components/Signout";
 import SubHeading from "../components/SubHeading";
+import SalesLineChart from "../components/SalesLineChart";
 
 export default function Dashboard() {
+  const [products, setProducts] = useState([]);
+  const [email,setemail]=useState("");
+  
+  useEffect(() => {
+    const storedEmail =JSON.parse(localStorage.getItem("email"));
+    setemail(storedEmail);
+    if (storedEmail) {
+      setemail(storedEmail); // Set the email from localStorage
+    } else {
+      console.error("Email not found in localStorage");
+    } // Set the email from localStorage
+  }, []);
+  const fetchProducts = async () => {
+    try {
+      if (email) {
+        const response = await axios.get(
+          `https://inven-hub-backend.vercel.app/product?email=${email}`
+        );}
+        setProducts(response.data);
+    } catch (error) {
+        console.error("Error fetching products:", error);
+    }
+};
+
+  useEffect(() => {
+    fetchProducts();
+}, []);
+
+const sortedProducts = [...products].sort((a, b) => b.selling_price - a.selling_price);
+
   return (
     <>
       <Signout />
@@ -59,21 +94,59 @@ export default function Dashboard() {
           <SubHeading label="Sales Overview" />
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
             <div className="px-5 py-3 bg-gray-100 text-center">Sales</div>
+            <span className="font-normal">{product.sale}</span>
             <div className="px-5 py-3 bg-gray-100 text-center">Revenue</div>
+            <span className="font-normal">{product.stock_selling_price}</span>
             <div className="px-5 py-3 bg-gray-100 text-center">Profit</div>
+            <span className="font-normal">{product.stock_profit}</span>
             <div className="px-5 py-3 bg-gray-100 text-center">Cost</div>
+            <span className="font-normal">{product.stock_cost}</span>
           </div>
 
-          <SubHeading label="Purchase Overview" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
-            <div className="px-5 py-3 bg-gray-100 text-center">Sales</div>
-            <div className="px-5 py-3 bg-gray-100 text-center">Revenue</div>
-            <div className="px-5 py-3 bg-gray-100 text-center">Profit</div>
-            <div className="px-5 py-3 bg-gray-100 text-center">Cost</div>
-          </div>
-
-          <SubHeading label="Sales & Purchase" />
+          {/*<SubHeading label="Sales & Purchase" />
+          <SalesLineChart salesData={sortedProducts} />  Pass sortedProducts to the line chart */}
           <SubHeading label="Top Selling Stock" />
+          <div className="bg-white flex flex-col w-full p-5">
+
+            {/* Table Header for larger screens */}
+            <div className="hidden md:flex flex-row p-2 border-b font-bold">
+              <div className="w-1/6 text-center">Name</div>
+              <div className="w-1/6 text-center">Cost Price</div>
+              <div className="w-1/6 text-center">Selling Price</div>
+              <div className="w-1/6 text-center">Manufacturing Date</div>
+              <div className="w-1/6 text-center">Expiry Date</div>
+              <div className="w-1/6 text-center">Batch Number</div>
+            </div>
+
+            {/* Product List */}
+            {sortedProducts.length > 0 ? (
+              sortedProducts.map((product) => (
+                <div key={product.id} className="p-4 border-b">
+                  {/* Mobile View (stacks details vertically) */}
+                  <div className="flex flex-col space-y-2 md:hidden">
+                    <div className="text-sm font-semibold">Name: <span className="font-normal">{product.name}</span></div>
+                    <div className="text-sm font-semibold">Cost Price: <span className="font-normal">{product.cost_price}</span></div>
+                    <div className="text-sm font-semibold">Selling Price: <span className="font-normal">{product.selling_price}</span></div>
+                    <div className="text-sm font-semibold">Manufacturing Date: <span className="font-normal">{moment(product.manufacture_date).format("DD/MM/YYYY")}</span></div>
+                    <div className="text-sm font-semibold">Expiry Date: <span className="font-normal">{moment(product.expiry_date).format("DD/MM/YYYY")}</span></div>
+                    <div className="text-sm font-semibold">Batch Number: <span className="font-normal">{product.batch_number}</span></div>
+                  </div>
+
+                  {/* Larger screen (table format) */}
+                  <div className="hidden md:flex flex-row">
+                    <div className="w-1/6 text-center">{product.name}</div>
+                    <div className="w-1/6 text-center">{product.cost_price}</div>
+                    <div className="w-1/6 text-center">{product.selling_price}</div>
+                    <div className="w-1/6 text-center">{moment(product.manufacture_date).format("DD/MM/YYYY")}</div>
+                    <div className="w-1/6 text-center">{moment(product.expiry_date).format("DD/MM/YYYY")}</div>
+                    <div className="w-1/6 text-center">{product.batch_number}</div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-center">No products available</p>
+            )}
+          </div>
         </div>
       </div>
     </>
