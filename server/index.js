@@ -408,7 +408,7 @@ app.post("/predict", async(req,res)=>{
 app.get("/profile", async(req,res)=>{
   try{
     const {email}=req.query;
-    const user=await profile.find({email});
+    const user=await profile.findOne({email});
     if(!user){
       return res.status(404).json({message:"User not found"});
     }
