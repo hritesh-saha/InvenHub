@@ -10,6 +10,7 @@ import { MdBarChart } from "react-icons/md";
 import { FaBox } from "react-icons/fa";
 import { FaProductHunt } from "react-icons/fa";
 import { FaUserAlt } from "react-icons/fa";
+import { Signout } from "../components/Signout";
 export default function Sidebar(){
     const [open,setOpen]=useState(true);
     return(
@@ -51,6 +52,9 @@ export default function Sidebar(){
                 <IoLogoWechat className={`text-stone-500 text-4xl rounded cursor-pointer block float-left mr-2 duration-300`}/>
                 <h1 className={`origin-left font-medium text-xl duration-300 ${!open && "scale-0"}`}>ChatBot</h1>
                 </a>
+                <div className="inline-flex pt-4">
+                    <Signout/>
+                </div>
                 </div>
                 <div className="inline-flex pt-4">
                 </div>
