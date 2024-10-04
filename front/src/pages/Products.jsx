@@ -17,22 +17,27 @@ export function Products(){
     const [expiry_date, setexpiry] = useState("");
     const [products, setproduct] = useState([]);
     const [batch_number, setbatch] = useState("");
+    const [email,setemail]=useState("");
     const [error, setError] = useState(""); // State to track errors
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get("https://inven-hub-backend.vercel.app/product");
+                setemail(localStorage.getItem("email"));
+                const response = await axios.get("https://inven-hub-backend.vercel.app/product",{
+                    params: { email: email }
+                });
                 setproduct(response.data);
             } catch (error) {
                 console.error("Error fetching products:", error);
             }
         };
         fetchProducts();
-    }, []);
+    }, [email]);
 
     const handleAddProduct = async () => {
+        setemail(localStorage.getItem("email"));
         // Validation: Check if any of the fields are empty
-        if (!name || !cost_price || !selling_price || !sale || !manufacture_date || !expiry_date || !batch_number) {
+        if (!name || !cost_price || !selling_price || !sale || !manufacture_date || !expiry_date || !batch_number || !email) {
             setError("All fields are required.");
             return;
         }
@@ -48,6 +53,7 @@ export function Products(){
                 expiry_date,
                 sale,
                 batch_number,
+                email
             });
             
             // Reset form values
@@ -59,7 +65,9 @@ export function Products(){
             setexpiry("");
             setbatch("");
 
-            const updatedResponse = await axios.get("https://inven-hub-backend.vercel.app/product");
+            const updatedResponse = await axios.get("https://inven-hub-backend.vercel.app/product",{
+                params: { email: email }
+            });
             setproduct(updatedResponse.data);
 
         } catch (error) {
@@ -69,7 +77,7 @@ export function Products(){
 
     return (
         <div className="bg-zinc-100 ">
-            <Signout />
+            
       
       {/* Render Navbar on mobile (hidden on large screens) */}
       <div className="lg:hidden">
@@ -93,7 +101,7 @@ export function Products(){
                         <Inputbox name="expiry_date" type="date" label="Expiry Date" onChange={(e) => { setexpiry(e.target.value) }} />
                         <Inputbox name="batch_number" type="number" label="Batch Number" onChange={(e) => { setbatch(e.target.value) }} />
                         {error && <p className="text-red-500">{error}</p>} {/* Display error if exists */}
-                        <Button onClick={handleAddProduct} label="Update Product" />
+                        <Button onClick={handleAddProduct} label="Add Product" />
                     </form>
                 </div>
                 <div className="bg-white w-96 border-2 border-stone-400">

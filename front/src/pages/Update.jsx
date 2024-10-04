@@ -111,12 +111,16 @@ export function Update() {
     const [expiry_date, setexpiry] = useState("");
     const [products, setproduct] = useState([]);
     const [batch_number, setbatch] = useState("");
+    const [email,setemail]=useState("");
     const [error, setError] = useState(""); // State to track errors
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get("https://inven-hub-backend.vercel.app/product");
+                setemail(localStorage.getItem("email"));
+                const response = await axios.get("https://inven-hub-backend.vercel.app/product",{
+                    params: { email: email }
+                });
                 setproduct(response.data);
             } catch (error) {
                 console.error("Error fetching products:", error);
@@ -127,6 +131,7 @@ export function Update() {
 
     const handleUpdateProduct = async () => {
         // Validation: Check if any of the fields are empty
+        setemail(localStorage.getItem("email"));
         if (!name || !cost_price || !selling_price || !sale || !manufacture_date || !expiry_date || !batch_number) {
             setError("All fields are required.");
             return;
@@ -155,7 +160,9 @@ export function Update() {
             setexpiry("");
             setbatch("");
 
-            const updatedResponse = await axios.get("https://inven-hub-backend.vercel.app/product");
+            const updatedResponse = await axios.get("https://inven-hub-backend.vercel.app/product",{
+                params: { email: email }
+            });
             setproduct(updatedResponse.data);
 
         } catch (error) {

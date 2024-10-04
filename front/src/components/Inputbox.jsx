@@ -1,10 +1,11 @@
-export default function Inputbox({ label, placeholder, value, onChange, width,type,name}) {
+export default function Inputbox({ label, placeholder, value, onChange, width,type,name,min}) {
     return (
       <div className="mx-1">
       <div className="text-sm font-medium text-left py-2">
         <label className="mb-2">{label}</label></div>
         <input
           required
+          min={min}
           type={type}
           name={name}
           placeholder={placeholder}

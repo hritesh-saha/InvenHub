@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export function Otp(){
     const navigate=useNavigate();
-    const[otp,setotp]=useState("");
+    const[otp,setotp]=useState();
     const [error, setError] = useState("");
     const HandleSendOtp=async ()=>{
         if (!otp) {
@@ -27,6 +27,7 @@ export function Otp(){
                 localStorage.removeItem("email");
                 navigate("/signup");
             }}catch(error){
+                localStorage.removeItem("email");
                 console.error("Error during OTP verification:", error);
                 setError("An error occurred. Please try again.");
                 navigate("/signup");
@@ -38,7 +39,7 @@ export function Otp(){
         <div className="flex flex-col justify-center">
         <div className="rounded-lg bg-zinc-600 border-4 border-gray-200 w-80 text-center p-2 h-max px-4">
             <Heading label="Otp"></Heading>
-            <Inputbox label="" placeholder="otp" onChange={(e) => setotp(e.target.value)}></Inputbox>
+            <Inputbox type="number" label="" placeholder="otp" onChange={(e) => setotp(e.target.value)}></Inputbox>
             {error && <p className="text-red-500">{error}</p>}
             <Button label="Send Otp" onClick={HandleSendOtp}></Button>
         </div>

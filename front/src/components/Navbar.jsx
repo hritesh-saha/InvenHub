@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { Signout } from './Signout';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,9 +43,10 @@ export default function Navbar() {
 
           {/* Optional Button */}
           <div className="mt-4 lg:mt-0">
-            <a href="#login" className="block lg:inline-block bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-100">
+            {/* <a href="#login" className="block lg:inline-block bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-100">
               Login
-            </a>
+            </a> */}
+            <Signout />
           </div>
         </div>
       </div>

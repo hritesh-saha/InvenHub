@@ -11,6 +11,9 @@ import { Update } from './pages/Update';
 import { User } from './pages/User';
 import {Otp} from './pages/Otp';
 import { Signout } from './components/Signout';
+import { Predict } from './pages/Predict';
+import AI from './pages/AI';
+import SearchPage from './pages/SearchPage';
 
 
 function App() {
@@ -28,6 +31,10 @@ function App() {
       <Route path='/update' element={<Update/>}></Route>
       <Route path='/user' element={<User/>}></Route>
       <Route path='/otp' element={<Otp></Otp>}></Route>
+      <Route path='/predict' element={<Predict></Predict>}></Route>
+      <Route path='/ai' element={<AI></AI>}></Route>
+      <Route path='/search' element={<SearchPage/>}></Route>
+
 
 
 

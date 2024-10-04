@@ -68,32 +68,38 @@ export default function Signup() {
   const [phone, setphone] = useState("");  
   const [password, setpassword] = useState("");
   const [error, setError] = useState("");
-  const handleSend=async ()=>{
+  const handleSend = async () => {
     if (!firstname || !lastname || !email || !phone || !password) {
       setError("All fields are required.");
       return;
-  }
-  
-  setError("");
+    }
+    setError("");
     try {
-      const response=await axios.post("https://inven-hub-backend.vercel.app/signup",
-        {
+      const signupResponse = await axios.post("https://inven-hub-backend.vercel.app/signup", {
+        firstname,
+        lastname,
+        email,
+        phone,
+        password,
+      });
+      
+      if (signupResponse.status === 200) {
+        const profileResponse = await axios.post("https://inven-hub-backend.vercel.app/add-profile", {
           firstname,
           lastname,
           email,
           phone,
-          password
-      });
-       
-      if(response.status === 200){
-        localStorage.setItem('email', JSON.stringify(email));
-        navigate("/otp");
+        });
+  
+        if (profileResponse.status === 201) {
+          localStorage.setItem('email', email);
+          navigate("/otp");
+        }
       }
     } catch (error) {
       console.error(error);
     }
-
-  }
+  };
 
   const handleClear = () => {
     setfirstname("");
@@ -104,36 +110,36 @@ export default function Signup() {
   };
 
   return (
-    <div className="bg-zinc-100 h-screen flex justify-center items-center">
-      <div className="w-4/5 my-8 bg-white flex">
-        <div className="w-80">
+    <div className="bg-zinc-100 h-screen flex justify-center items-center p-4">
+      <div className="w-full max-w-5xl bg-white flex flex-col lg:flex-row rounded-lg shadow-lg overflow-hidden">
+        <div className="w-full lg:w-1/2">
           <img
             src="https://img.freepik.com/free-vector/stream-binary-code-design-vector_53876-175009.jpg"
             alt="photo"
+            className="w-full h-64 lg:h-full object-cover"
           />
         </div>
-        <div className="flex flex-col p-5 space-y-4 justify-center">
+        <div className="flex flex-col p-5 space-y-4 justify-center w-full lg:w-1/2">
           <SubHeading label="Register"></SubHeading>
           <p className="text-sky-900">
             Manage all your inventory efficiently
           </p>
           <p className="text-sm">
             Let's get all set up so you can verify your personal account and
-            begin setting up your work profile
+            begin setting up your work profile.
           </p>
-          
-          {/* Input fields container */}
+
           <div className="flex flex-col space-y-4">
-            <div className="flex space-x-4">
-              <Inputbox width="48" label="First name" placeholder="Enter your first name" value={firstname} onChange={(e) => setfirstname(e.target.value)} />
-              <Inputbox width="48" label="Last name" placeholder="Enter your last name" value={lastname} onChange={(e) => setlastname(e.target.value)} />
+            <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
+              <Inputbox width="full" label="First name" placeholder="Enter your first name" value={firstname} onChange={(e) => setfirstname(e.target.value)} />
+              <Inputbox width="full" label="Last name" placeholder="Enter your last name" value={lastname} onChange={(e) => setlastname(e.target.value)} />
             </div>
-            <div className="flex space-x-4">
-              <Inputbox width="48" label="Email" placeholder="Enter your email" value={email} onChange={(e) => setemail(e.target.value)} />
-              <Inputbox width="48" label="Phone no." placeholder="Enter your phone no." value={phone} onChange={(e) => setphone(e.target.value)} />
+            <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
+              <Inputbox width="full" label="Email" placeholder="Enter your email" value={email} onChange={(e) => setemail(e.target.value)} />
+              <Inputbox width="full" label="Phone no." placeholder="Enter your phone no." value={phone} onChange={(e) => setphone(e.target.value)} />
             </div>
-            <div className="flex w-96">
-              <Inputbox width="auto" label="Password" placeholder="Enter a password" value={password} onChange={(e) => setpassword(e.target.value)} />
+            <div className="flex w-full">
+              <Inputbox width="full" label="Password" placeholder="Enter a password" value={password} onChange={(e) => setpassword(e.target.value)} />
             </div>
             {error && <p className="text-red-500">{error}</p>}
           </div>
