@@ -422,11 +422,11 @@ app.get("/profile", async(req,res)=>{
 app.post("/add-profile", async(req,res)=>{
   try{
     const {firstname,lastname,email,phone,location}=req.body;
-    const user=await signUp.find({email});
+    const user=await signUp.findOne({email});
     if(!user){
       return res.status(404).json({message:"Profile Not Found"});
     }
-    const newUser=await profile.create({
+    const newUser=new profile({
       firstname,
       lastname,
       email,
