@@ -11,7 +11,7 @@ The **AI-Based Inventory Management System** optimizes the handling of inventory
 | **Hritesh Saha** | Backend Developer            | [GitHub](https://github.com/hritesh-saha) |
 | **Avirup Ghosal**| Frontend Developer           | [GitHub](https://github.com/avirup-ghosal) |
 | **Debjyoti Ghosh** | AI Developer               | [GitHub](https://github.com/debjyoti-ghosh) |
-| **Biswajit Chatterjee** | UI/UX Designer               | [GitHub](https://github.com/biswajit-chatterjee) |
+| **Biswajit Chatterjee** | UI/UX Designer               | [GitHub](https://github.com/Biswajit9609) |
 
 ---
 
